@@ -6,10 +6,10 @@ public class Round
     public bool IsRoundActive { get; private set; }
     public bool IsRoundFinished { get; private set; }
     public bool IsBombPlanted { get; private set; }
-    private Terrorist[] _terrorists { get;}
-    private CounterTerrorist[] _counterTerrorists { get;}
+    private Terrorist[] Terrorists { get;}
+    private CounterTerrorist[] CounterTerrorists { get;}
 
-    private Random _random;
+    private readonly Random _random;
     private int _bombTimer;
 
     public Round()
@@ -19,13 +19,13 @@ public class Round
         IsRoundActive = false;
         IsBombPlanted = false;
         _random = new Random();
-        _terrorists = new Terrorist[5];
-        _counterTerrorists = new CounterTerrorist[5];
+        Terrorists = new Terrorist[5];
+        CounterTerrorists = new CounterTerrorist[5];
 
         for (var i = 0; i < 5; i++)
         {
-            _terrorists[i] = new Terrorist();
-            _counterTerrorists[i] = new CounterTerrorist();
+            Terrorists[i] = new Terrorist();
+            CounterTerrorists[i] = new CounterTerrorist();
         }
     }
 
@@ -35,14 +35,14 @@ public class Round
         while (IsRoundActive && !IsRoundFinished || _bombTimer != 0)
         {
             var randomRoundCycle = _random.Next(0, 5);
-            if (CheckAliveAmount(_terrorists) <= 0)
+            if (CheckAliveAmount(Terrorists) <= 0)
             {
                 _roundWinner = "Terroristene vant";
                 IsRoundActive = false;
                 IsRoundFinished = true;
                 break;
             }
-            if (CheckAliveAmount(_counterTerrorists) <= 0)
+            if (CheckAliveAmount(CounterTerrorists) <= 0)
             {
                 _roundWinner = "CounterTerroristene vant";
                 IsRoundActive = false;
@@ -50,9 +50,9 @@ public class Round
                 break;
             }
 
-            if (!_terrorists[randomRoundCycle].IsDead) _terrorists[randomRoundCycle].DoRandomAction(_counterTerrorists[randomRoundCycle], this);
-            if (!_counterTerrorists[randomRoundCycle].IsDead && CheckAliveAmount(_terrorists) > 0)_counterTerrorists[randomRoundCycle].KillTerrorist(_terrorists[randomRoundCycle], this);
-            if(!_counterTerrorists[randomRoundCycle].IsDead && CheckAliveAmount(_terrorists) == 0) _counterTerrorists[randomRoundCycle].DefuseBomb(this);
+            if (!Terrorists[randomRoundCycle].IsDead) Terrorists[randomRoundCycle].DoRandomAction(CounterTerrorists[randomRoundCycle], this);
+            if (!CounterTerrorists[randomRoundCycle].IsDead && CheckAliveAmount(Terrorists) > 0)CounterTerrorists[randomRoundCycle].KillTerrorist(Terrorists[randomRoundCycle], this);
+            if(!CounterTerrorists[randomRoundCycle].IsDead && CheckAliveAmount(Terrorists) == 0) CounterTerrorists[randomRoundCycle].DefuseBomb(this);
             _bombTimer--;
         }
     }
@@ -101,22 +101,5 @@ public class Round
             }
             Thread.Sleep(1000);
         }
-        
-        // for (int i = 15; i > 0; i--)
-        // {
-        //     Console.WriteLine($"Bomba sprenger om {i} sekunder");
-        //     if (!IsBombPlanted) return;
-        //     if (i == 1)
-        //     {
-        //         Console.WriteLine("Bomba har sprengt");
-        //         _roundWinner = "Terroristene vant";
-        //         IsBombPlanted = false;
-        //         IsRoundActive = false;
-        //         IsRoundFinished = true;
-        //         return;
-        //     }
-        //     Thread.Sleep(1000);
-        // }
-        
     }
 }
