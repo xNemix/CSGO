@@ -27,15 +27,15 @@ public class Terorist
             Thread.Sleep(1000);
         }
 
-        if (timer == 0) Game.IsBombPlanted = true;
+        if (timer == 0) Round.IsBombPlanted = true;
 
-        if (Game.IsBombPlanted)
+        if (Round.IsBombPlanted)
         {
                 
         }
     }
 
-    private static bool IsSuccessful(int maxValue)
+    private bool IsSuccessful(int maxValue)
     {
         Random rand = new Random();
 
