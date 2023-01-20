@@ -18,13 +18,13 @@ public class Game
         }
     }
 
-    public void SetActiveRound(int activeRound)
-    {
-        var round = Rounds[activeRound];
-        round.SetRoundActive();
-        round.RoundLoop();
-        SetNextRound();
-    }
+    // public void SetActiveRound(int activeRound)
+    // {
+    //     var round = Rounds[activeRound];
+    //     round.SetRoundActive();
+    //     round.RoundLoop();
+    //     SetNextRound();
+    // }
 
     private void SetNextRound()
     {

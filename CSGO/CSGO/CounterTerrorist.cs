@@ -4,32 +4,23 @@ public class CounterTerrorist
 {
     public bool IsDead { get; private set; }
 
-    public void DefuseBomb(Round round)
+    public CounterTerrorist()
     {
-        if (IsDead) return;
-        round.SetBombToDefused();
+        IsDead = false;
+    }
+    public bool DefuseBomb()
+    {
+        if (IsDead) return false;
         Console.WriteLine("CT har defusa bomba");
+        return true;
     }
 
-    public void KillTerrorist(Terrorist t, Round round)
+    public void KillTerrorist(Terrorist[] terrorists, int index, bool isBombPlanted)
     {
         if (IsDead) return;
-        if (!round.IsBombPlanted)
-        {
-            if (IsSuccessful(5))
-            {
-                t.Kill();
-                Console.WriteLine("CT drepte en terrorist");
-            }
-        }
-        else
-        {
-            if (IsSuccessful(3))
-            {
-                t.Kill();
-                Console.WriteLine("CT drepte en terrorist");
-            }
-        }
+        if (!IsSuccessful(5)) return;
+        terrorists[index].Kill();
+        Console.WriteLine("CT drepte en terrorist");
     }
     
     

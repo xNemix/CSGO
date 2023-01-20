@@ -29,33 +29,33 @@ public class Round
         }
     }
 
-    public void RoundLoop()
-    {
-        
-        while (IsRoundActive && !IsRoundFinished || _bombTimer != 0)
-        {
-            var randomRoundCycle = _random.Next(0, 5);
-            if (CheckAliveAmount(Terrorists) <= 0)
-            {
-                _roundWinner = "Terroristene vant";
-                IsRoundActive = false;
-                IsRoundFinished = true;
-                break;
-            }
-            if (CheckAliveAmount(CounterTerrorists) <= 0)
-            {
-                _roundWinner = "CounterTerroristene vant";
-                IsRoundActive = false;
-                IsRoundFinished = true;
-                break;
-            }
-
-            if (!Terrorists[randomRoundCycle].IsDead) Terrorists[randomRoundCycle].DoRandomAction(CounterTerrorists[randomRoundCycle], this);
-            if (!CounterTerrorists[randomRoundCycle].IsDead && CheckAliveAmount(Terrorists) > 0)CounterTerrorists[randomRoundCycle].KillTerrorist(Terrorists[randomRoundCycle], this);
-            if(!CounterTerrorists[randomRoundCycle].IsDead && CheckAliveAmount(Terrorists) == 0) CounterTerrorists[randomRoundCycle].DefuseBomb(this);
-            _bombTimer--;
-        }
-    }
+    // public void RoundLoop()
+    // {
+    //     
+    //     while (IsRoundActive && !IsRoundFinished || _bombTimer != 0)
+    //     {
+    //         var randomRoundCycle = _random.Next(0, 5);
+    //         if (CheckAliveAmount(Terrorists) <= 0)
+    //         {
+    //             _roundWinner = "Terroristene vant";
+    //             IsRoundActive = false;
+    //             IsRoundFinished = true;
+    //             break;
+    //         }
+    //         if (CheckAliveAmount(CounterTerrorists) <= 0)
+    //         {
+    //             _roundWinner = "CounterTerroristene vant";
+    //             IsRoundActive = false;
+    //             IsRoundFinished = true;
+    //             break;
+    //         }
+    //
+    //         if (!Terrorists[randomRoundCycle].IsDead) Terrorists[randomRoundCycle].DoRandomAction(CounterTerrorists[randomRoundCycle], this);
+    //         if (!CounterTerrorists[randomRoundCycle].IsDead && CheckAliveAmount(Terrorists) > 0)CounterTerrorists[randomRoundCycle].KillTerrorist(Terrorists[randomRoundCycle], this);
+    //         if(!CounterTerrorists[randomRoundCycle].IsDead && CheckAliveAmount(Terrorists) == 0) CounterTerrorists[randomRoundCycle].DefuseBomb(this);
+    //         _bombTimer--;
+    //     }
+    // }
 
     private int CheckAliveAmount(Terrorist[] terrorists)
     {

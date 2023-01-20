@@ -4,40 +4,35 @@ public class Terrorist
 {
     public bool IsDead { get; private set; }
 
-
-    public void KillCounterTerrorist(CounterTerrorist ct)
+    public Terrorist()
+    {
+        IsDead = false;
+    }
+    public void KillCounterTerrorist(CounterTerrorist[] counterTerrorists, int index)
     {
         if(IsDead) return;
         var isSuccessful = IsSuccessful(7);
-        if (isSuccessful) ct.Kill();
+        if (!isSuccessful)  return;
+        counterTerrorists[index].Kill();
+        Console.WriteLine("T drepte en CT");
     }
     
     
     public bool FindBombSite()
     {
-        return !IsDead && IsSuccessful(10);
+        return IsSuccessful(10);
     }
 
-    public void PlantBomb(Round round)
-    {
-        if (IsDead && !FindBombSite()) return;
-        round.SetBombActive();
-    }
-
-    public void DoRandomAction(CounterTerrorist counterTerrorist, Round round)
+    public bool PlantBomb()
     {
         var hasFoundBombSite = FindBombSite();
-        if(hasFoundBombSite) Console.WriteLine("En Terrorist har funnet bombsite A");
-        if (hasFoundBombSite && !round.IsBombPlanted && !round.IsRoundFinished)
-        {
-            PlantBomb(round);
-        }
-        if(!counterTerrorist.IsDead)
-        {
-            KillCounterTerrorist(counterTerrorist);
-        }
+        if (!hasFoundBombSite) return false;
+        Console.WriteLine("En Terrorist har funnet bombsite A");
+        Console.WriteLine("bomben har blitt plantet");
+        return true;
     }
 
+    
     private bool IsSuccessful(int maxValue)
     {
         Random rand = new Random();
